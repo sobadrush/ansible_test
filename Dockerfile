@@ -1,14 +1,26 @@
-# 使用官方的 Ubuntu 作为基础镜像
 FROM ubuntu:latest
 
-# 安装 Telnet
-RUN apt-get update && apt-get install -y telnet && apt install -y iputils-ping && apt-get install -y openssh-server
+RUN apt update && apt-get install -y telnet && apt install -y iputils-ping && apt install openssh-server sudo -y && apt install vim sudo -y
 
-# 啟動 SSH 服務
+# Create a user “sshuser” and group “sshgroup” , -m: --create-home
+RUN groupadd sshgroup && useradd -ms /bin/bash -g sshgroup sshuser --password $(echo "1qaz@WSX" | openssl passwd -1 -stdin)
+
+# Create sshuser directory in home
+RUN mkdir -p /home/sshuser/.ssh
+
+# Create RSA-KEY folder
+RUN mkdir -p /home/sshuser/.ssh/authorized_keys/
+
+# Copy the ssh public key in the authorized_keys file. The idkey.pub below is a public key file you get from ssh-keygen. They are under ~/.ssh directory by default.
+# COPY idkey.pub /home/sshuser/.ssh/authorized_keys
+
+# change ownership of the key file. 
+RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
+
+# Start SSH service
 RUN service ssh start
 
-# 開放 22 port
+# Expose docker port 22
 EXPOSE 22
 
-# 保持容器运行
-CMD ["tail", "-f", "/dev/null"]
+CMD ["/usr/sbin/sshd", "-D"]
