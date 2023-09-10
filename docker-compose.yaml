@@ -1,7 +1,7 @@
 version: '3'
 services:
   ubuntu1:
-    image: ubuntu-ssh:v1
+    image: ubuntu:ssh-default
     container_name: ubuntu_container_1
     deploy:
       resources:
@@ -13,7 +13,7 @@ services:
           memory: "128M"
     tty: true
   ubuntu2:
-    image: ubuntu-ssh:v1
+    image: ubuntu:ssh-default
     container_name: ubuntu_container_2
     deploy:
       resources:
