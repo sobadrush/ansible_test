@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+    # task 1
+    - name: test connection
+      ping:
+      register: message
+
+    # task 2
+    - name: print debug message
+      debug:
+        msg: "{{ message }}"
+
+    # task 3
+    - name: example copying file with owner and permissions
+      copy:
+        src: /root/ansible/ansibleConfig/Roger.txt
+        dest: /home/sshuser/Roger.txt
+        owner: sshuser
+        group: sshgroup
+        mode: 0644
+        backup: yes # 目標檔案已存在時，先將檔案存一複本
