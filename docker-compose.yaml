@@ -3,6 +3,8 @@ services:
   ubuntu1:
     image: ubuntu:ssh-default
     container_name: ubuntu_container_1
+    volumes:
+      - ./ansibleConfig:/root/ansible/ansibleConfig
     deploy:
       resources:
         limits:
@@ -15,6 +17,18 @@ services:
   ubuntu2:
     image: ubuntu:ssh-default
     container_name: ubuntu_container_2
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "128M"
+    tty: true
+  ubuntu3:
+    image: ubuntu:ssh-default
+    container_name: ubuntu_container_3
     deploy:
       resources:
         limits:
