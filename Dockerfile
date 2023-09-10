@@ -18,9 +18,10 @@ RUN mkdir -p /home/sshuser/.ssh/authorized_keys/
 RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
 
 # Start SSH service
-RUN service ssh start
+# RUN service ssh start
 
 # Expose docker port 22
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "-D"]
+# set entrypoint to restart ssh automatically
+ENTRYPOINT service ssh restart && bash
