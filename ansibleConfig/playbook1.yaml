@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: qas
   tasks:
     # task 1
     - name: test connection
@@ -15,8 +15,44 @@
     - name: example copying file with owner and permissions
       copy:
         src: /root/ansible/ansibleConfig/Roger.txt
-        dest: /home/sshuser/Roger.txt
+        dest: /home/sshuser/
         owner: sshuser
         group: sshgroup
         mode: 0644
         backup: yes # 目標檔案已存在時，先將檔案存一複本
+
+    # task 4
+    - name: Update repositories cache package
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+
+    # task 5
+    - name: Update repositories cache and install "net-tools" package
+      become: true
+      apt:
+        name: net-tools
+        update_cache: yes
+        state: present # 如果存儲庫已經存在於系統中，Ansible 不會做任何操作
+
+    # task 6: 安裝 git
+    - name: Install git
+      become: true
+      apt:
+        name: git
+        state: present # 如果存儲庫已經存在於系統中，Ansible 不會做任何操作
+        update_cache: yes
+
+    # task 7: 建立 git repo 目錄
+    - name: Creates directory
+      file:
+        path: /home/sshuser/git_repo/
+        state: directory
+
+    # task 8: Example git checkout from Ansible Playbooks
+    - git:
+        repo: 'https://github.com/sobadrush/hello-react.git'
+        dest: /home/sshuser/git_repo/
+        version: main # branch 名稱
