@@ -1,0 +1,10 @@
+---
+- hosts: 
+  - dev
+  gather_facts: True # 預設是 True，會主動蒐集資訊
+  tasks:
+    # task 1
+    - name: "Ping Host"
+      ansible.builtin.ping:
+      # register: message
+    - debug: var=ansible_os_family # 可以使用 ansible <host> -m setup 查看有什麼參數
