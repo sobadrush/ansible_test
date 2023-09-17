@@ -1,0 +1,19 @@
+---
+- hosts:
+  - qas
+  gather_facts: True # 預設是 True，會主動蒐集資訊
+  environment:
+    ENVIRONMENT: "{{ env }}" # 透過 ansible-playbook playbook-include_vars.yaml -e "{\"env\":\"xxx\", \"application\":\"ooo\"}" 傳入
+  pre_tasks:
+
+    # preTask-1
+    - name: Print ansible_env # gather_facts: True 才會生效
+      debug:
+        msg: "{{ ansible_env }}" # debug msg: 用字串插值 "{{ key }}" 語法取變數
+
+    # preTask-2
+    - name: print env
+      debug:
+        msg: 
+          - "env: {{ env }}"
+          - "application: {{ application }}"
