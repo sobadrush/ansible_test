@@ -7,8 +7,8 @@
     # preTask-1
     - name: Run hostname command
       # ansible.builtin.shell: hostname
-      shell: hostname
-      register: msg1
+      shell: hostname # 用子節點上的 shell 執行 hostname 指令
+      register: msg1 # 將結果存取到 msg1
 
     # preTask-2
     - name: print debug message
@@ -16,10 +16,6 @@
       # mag: "{{ msg1 }}" # 可以先印出 msg1 再用 json 的方式如下抓取要觀測的值
         msg: "[qas] hostname is: {{ msg1.stdout_lines[0] }}" # debug msg: 用字串插值 {{ }} 語法取變數
 
-    # # preTask-3
-    # - name: "Loading {{env}} setting"
-    #   ansible.builtin.include_vars:
-    #     file: "{{application}}/config.yaml"
   tasks:
     # task-1
     - name: "Ping 被控節點"
