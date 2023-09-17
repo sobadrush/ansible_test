@@ -1,0 +1,23 @@
+---
+- hosts:
+  - qas
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  pre_tasks:
+
+    # preTask-1
+    - name: "Loading [qas] setting"
+      ansible.builtin.include_vars:
+        # file: "{{application}}/config.yaml"
+        file: "projectA/config.yaml" # 預設會讀取 ./vars 下的檔案(也可透過 dir 屬性指定絕對路徑)
+        # name: projA_Config # 將讀取到的 config.yaml 存到 projA_Config 這個變數中供後續使用。若沒設定 name，則可直接用 config 中定義的 key ，用字串插值 "{{ key }}" 在後續操作中使用
+
+    # preTask-4
+    - name: "印出 include_vars 讀到的設定"
+      debug:
+        msg: 
+          - "{{ images }}"
+          - "{{ config }}"
+        # msg:
+        #   - "images: {{ projA_Config.images }}"
+        #   - "config: {{ projA_Config.config }}"
+        # var: projA_Config # 打印出 projA_Config (debug var: 直接取得變數)

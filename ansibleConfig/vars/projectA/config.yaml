@@ -1,0 +1,9 @@
+images:
+  - nanshan-policies-service
+
+config:
+  qas:
+    ignore_load_image: true
+    env:
+      VERSION: qas
+      REDIS: redis://:nanshan.1234@10.127.2.22:6379/1
