@@ -1,0 +1,41 @@
+---
+- hosts:
+  - qas
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  pre_tasks:
+
+    # preTask-1
+    - name: Run hostname command
+      # ansible.builtin.shell: hostname
+      shell: hostname
+      register: msg1
+
+    # preTask-2
+    - name: print debug message
+      debug:
+      # mag: "{{ msg1 }}" # 可以先印出 msg1 再用 json 的方式如下抓取要觀測的值
+        msg: "[qas] hostname is: {{ msg1.stdout_lines[0] }}" # debug msg: 用字串插值 {{ }} 語法取變數
+
+    # # preTask-3
+    # - name: "Loading {{env}} setting"
+    #   ansible.builtin.include_vars:
+    #     file: "{{application}}/config.yaml"
+  tasks:
+    # task-1
+    - name: "Ping 被控節點"
+      ansible.builtin.ping:
+
+    # # task-2
+    # - name: "Run netstat -an and print the result"
+    #   ansible.builtin.command: netstat -an # 內建指令，ansible.builtin 前綴可以省略
+    #   register: netstat_output  # 將命令輸出存儲在 netstat_output 變數中
+
+    # task-2: 改用 shell (使用子節點上的 shell，for 通用性，不建議使用!)
+    - name: "Run netstat -an and print the result"
+      ansible.builtin.shell: "netstat -an | grep LIST"
+      register: netstat_output  # 將命令輸出存儲在 netstat_output 變數中
+
+    # task-3
+    - name: "Print network status"
+      ansible.builtin.debug: 
+        var: netstat_output.stdout_lines # 打印出 netstat_output (debug var: 直接取得變數)
