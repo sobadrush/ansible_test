@@ -1,0 +1,22 @@
+---
+- hosts:
+  - dev
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  tasks:
+    - name: "task-1: 建立目錄"
+      ansible.builtin.file: 
+        path: /home/sshuser/{{appName}}
+        owner: sshuser
+        group: sshgroup
+        state: directory
+        force: true
+        mode: "0755"
+
+    - name: "task-2: 建立檔案"
+      ansible.builtin.file: 
+        path: /home/sshuser/{{appName}}/poem.txt
+        owner: sshuser
+        group: sshgroup
+        state: touch
+        force: true
+        mode: "u+rw,g+r,o+r"
