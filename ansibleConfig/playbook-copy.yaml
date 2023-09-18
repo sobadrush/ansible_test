@@ -1,0 +1,45 @@
+---
+- hosts:
+  - dev
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  tasks:
+    - name: "task-1: 建立目錄"
+      ansible.builtin.file: 
+        path: /home/sshuser/{{appName}}
+        owner: sshuser
+        group: sshgroup
+        state: directory
+        force: False
+        mode: "0755"
+
+    - name: "task-2: 複製檔案"
+      ansible.builtin.copy:
+        src: "./Roger.txt"
+        dest: "/home/sshuser/{{appName}}"
+        owner: sshuser
+        group: sshgroup
+        mode: '0644'
+        backup: yes
+
+    - name: "task-3: 複製目錄&其下檔案"
+      ansible.builtin.copy:
+        src: "./MyDir" # 要複製整個目錄， 可以有末尾斜線，有的話會指複製到其下檔案
+        dest: "/home/sshuser/{{appName}}/"
+        owner: sshuser
+        group: sshgroup
+        directory_mode: "0755"
+
+    - name: "task-4: 對既存文檔加入內容"
+      ansible.builtin.lineinfile:
+        path: "/home/sshuser/{{appName}}/MyDir/ABC.txt"
+        line: "早安午安晚安"
+
+    - name: "task-5: 複製檔案並加入新內容"
+      ansible.builtin.copy:
+        content: | # 保留換行
+          千山鳥飛絕
+          萬徑人蹤滅
+          孤舟簑笠翁
+          獨釣寒江雪
+        dest: "/home/sshuser/{{appName}}/MyPoem.txt"
+        force: True
