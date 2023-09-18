@@ -1,0 +1,16 @@
+---
+- hosts:
+  - qas
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  pre_tasks:
+    # preTask-1
+    - name: "使用 Ansible Vault 加密的文件"
+      ansible.builtin.include_vars:
+        file: "projectB/db-config.yaml" # 預設會讀取 ./vars 下的檔案
+        name: dbConfig
+    
+    # preTask-2
+    - name: "Print Vault db-config"
+      debug:
+        var: dbConfig
+        # msg: "{{ dbConfig }}"
