@@ -1,0 +1,16 @@
+---
+- hosts:
+  - dev
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  tasks:
+    - name: "task-1: 刪除檔案"
+      ansible.builtin.file: 
+        path: /home/sshuser/{{appName}}/poem.txt
+        state: absent
+        force: true
+
+    - name: "task-2: 刪除目錄"
+      ansible.builtin.file: 
+        path: /home/sshuser/{{appName}}
+        state: absent
+        force: true
