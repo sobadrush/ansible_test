@@ -1,0 +1,23 @@
+---
+- hosts:
+  - dev
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  vars:
+    env: "dev1"
+  vars_files:
+    - vars/{{ env }}.yml
+  tasks:
+    - name: "[task-1]: 置換 .j2 檔內容，並產生 hello_world.txt 檔案"
+      template:
+        src: ./hello_world.txt.j2
+        dest: /tmp/hello_world.txt
+        force: yes
+
+    - name: "[task-2]: 將 cat 結果存入 result"
+      command: cat /tmp/hello_world.txt
+      register: result
+
+    - name: "[task-3]: debug 模組，顯示檔案內容"
+      debug:
+        var: result.stdout_lines
+        # msg: "{{ result.stdout_lines }}" # 字串插值
