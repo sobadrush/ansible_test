@@ -1,5 +1,5 @@
 [dev]
-ubuntu2.local ansible_ssh_host=172.30.0.2 ansible_ssh_port=22 ansible_ssh_user=sshuser ansible_ssh_pass=1qaz@WSX
+ubuntu2.local ansible_ssh_host=172.30.0.2 ansible_ssh_port=22 ansible_ssh_user=sshuser ansible_ssh_pass=1qaz@WSX ansible_sudo_pass=1qaz@WSX
 
 [qas]
 ubuntu3.local ansible_ssh_host=172.30.0.4 ansible_ssh_port=22 ansible_ssh_user=sshuser ansible_ssh_pass=1qaz@WSX ansible_sudo_pass=1qaz@WSX

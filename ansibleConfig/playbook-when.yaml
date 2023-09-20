@@ -1,0 +1,28 @@
+---
+- hosts:
+  - dev
+  gather_facts: True # 預設是 True，會主動蒐集資訊(要打開才可進行 ansible_pkg_mgr 判斷)
+  pre_tasks:
+
+    # Debian, Ubuntu
+    - name: "Task-1: apt 安裝 net-tools"
+      become: yes
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: present # 確保 net-tools 在主機上有被安裝。若無，則會進行安裝
+        update_cache: yes
+      vars:
+        packages:
+        - net-tools
+      when: ansible_pkg_mgr == "apt" # 判斷被控節點上的套件管理器
+
+    # CentOS
+    - name: "Task-1: yum 安裝 net-tools"
+      become: yes
+      ansible.builtin.yum:
+        name: "{{ packages }}"
+        state: present # 確保 net-tools 在主機上有被安裝。若無，則會進行安裝
+      vars:
+        packages:
+        - net-tools
+      when: ansible_pkg_mgr == "yum" # 判斷被控節點上的套件管理器
