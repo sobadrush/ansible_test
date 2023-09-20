@@ -1,0 +1,17 @@
+---
+- hosts:
+  - dev
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  vars:
+    want_to_installs:
+      - net-tools
+      - vim
+      - telnet
+  tasks:
+    - name: "[task-1]: 使用 loop 透過 debug 印出字串"
+      debug:
+        msg: "Loop {{ item }}" # Ansible 的 loop，其 item 為預設名，一般情況下不可修改
+      with_items: "{{ want_to_installs }}" # 抓取 vars 中的 List: want_to_installs
+      when:
+        - want_to_installs is defined # 若變數有定義
+        # - want_to_installs is not defined # 若變數沒定義
