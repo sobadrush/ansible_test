@@ -1,0 +1,12 @@
+---
+- hosts:
+  - dev
+  gather_facts: False # 預設是 True，會主動蒐集資訊
+  tasks:
+    - name: "[task-1]: 使用 loop 透過 debug 印出字串"
+      debug:
+        msg: "Loop {{ item.num }}: {{ item.str }}" # Ansible 的 loop，其 item 為預設名，一般情況下不可修改
+      with_items:
+        - { num: '0', str: 'automate' }
+        - { num: '1', str: 'with' }
+        - { num: '2', str: 'ansible' }
