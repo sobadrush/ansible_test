@@ -1,0 +1,15 @@
+---
+- hosts: qas
+  roles:
+    - adarnimrod.example # 使用 role: adarnimrod.example 進行 ansible role 測試
+  gather_facts: True # 預設是 True，會主動蒐集資訊
+  tasks:
+    # task 1
+    - name: test connection
+      ping:
+      register: message # "register "允許捕獲模塊的執行結果，並在 playbook 中的其他地方使用這些結果
+
+    # task 2
+    - name: print debug message
+      debug:
+        msg: "{{ message }}"
