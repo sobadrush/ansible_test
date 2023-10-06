@@ -9,9 +9,9 @@
       
     # # task-2
     # - name: "debug [gather_facts] result"
-    #   debug: var=ansible_os_family # 可以使用 ansible <host> -m setup 查看有什麼參數
+    #   debug: var=ansible_os_family # 可以使用 ansible <host> -m setup 查看有什麼參數，ex: ansible 127.0.0.1 -m setup
     
     # task-2: debug 可以改成如下的寫法
     - name: "debug [gather_facts] result"
       debug:
-        var: ansible_os_family # 可以使用 ansible <host> -m setup 查看有什麼參數
+        var: ansible_os_family # 可以使用 ansible <host> -m setup 查看有什麼參數，ex: ansible 127.0.0.1 -m setup
