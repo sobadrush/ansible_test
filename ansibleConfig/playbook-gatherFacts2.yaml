@@ -1,8 +1,0 @@
----
-- hosts: 
-  - all
-  gather_facts: True # 預設是 True，會主動蒐集資訊
-  tasks:
-    - name: "debug [gather_facts] result: ansible_facts"
-      debug:
-        var: ansible_facts # 也可以使用 ansible <host> -m setup 查看有什麼參數，ex: ansible 127.0.0.1 -m setup

@@ -1,0 +1,23 @@
+---
+- hosts: 
+  - dev
+  gather_facts: True # 預設是 True，會主動蒐集資訊
+  tasks:
+    # - name: "[task1] debug [gather_facts] result: ansible_facts"
+    #   debug:
+    #     var: ansible_facts # 也可以使用 ansible <host> -m setup 查看有什麼參數，ex: ansible 127.0.0.1 -m setup
+    
+    - name: "[task2] 自 [gather_facts] 取得 os-name"
+      debug:
+        # msg: "ansible_distribution: {{ ansible_distribution }}"
+        var: ansible_distribution
+    
+    - name: "[task3] 測試 when: Ubuntu"
+      debug:
+        msg: "我是 Ubuntu"
+      when: ansible_distribution == "Ubuntu" # 判斷被控節點上的 OS
+
+    - name: "[task4] 測試 when: RedHat"
+      debug:
+        msg: "我是 RedHat"
+      when: ansible_distribution == "RedHat" # 判斷被控節點上的 OS
