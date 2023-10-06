@@ -1,0 +1,6 @@
+---
+- name: '[Ubuntu] Install Git.'
+  apt:
+    name: "git"
+    update_cache: "yes"
+    state: "{{ git_package_state | default('present') }}"

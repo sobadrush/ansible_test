@@ -1,0 +1,22 @@
+galaxy_info:
+  author: 0ta2
+  description: Install Git
+  license: 'license (MIT)'
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - 30
+        - 31
+    - name: Ubuntu
+      versions:
+        - eoan
+        - bionic
+  galaxy_tags:
+    - development
+    - system
+    - git

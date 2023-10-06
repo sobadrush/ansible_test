@@ -1,0 +1,12 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Check Installed a php package.
+    package_facts:
+      manager: auto
+
+  - name: Test if git package is installed.
+    assert:
+      that:
+        - "'git' in ansible_facts.packages"

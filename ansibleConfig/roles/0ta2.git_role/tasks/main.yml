@@ -1,0 +1,6 @@
+---
+- import_tasks: Ubuntu.yml
+  when: ansible_facts['os_family'] == "Debian"
+
+- import_tasks: RedHat.yml
+  when: ansible_facts['os_family'] == "RedHat"
